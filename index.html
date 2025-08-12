@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tech Titans Symposium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+    header {
+      background: #161b22;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    header h1 {
+      color: #58a6ff;
+      font-weight: 600;
+    }
+    nav a {
+      color: #58a6ff;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #a5d6ff;
+    }
+    main {
+      flex: 1;
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    section {
+      margin-bottom: 4rem;
+    }
+    .intro h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #58a6ff;
+    }
+    .intro p {
+      font-size: 1.1rem;
+      color: #8b949e;
+    }
+    /* Events Section */
+    .events-tabs {
+      display: flex;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .events-tabs div {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      border: 2px solid #58a6ff;
+      color: #58a6ff;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .events-tabs div.active,
+    .events-tabs div:hover {
+      background: #58a6ff;
+      color: #0d1117;
+    }
+    .events-list {
+      display: none;
+      grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .events-list.active {
+      display: grid;
+    }
+    .event-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #58a6ff33;
+      transition: transform 0.3s ease;
+    }
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px #58a6ffaa;
+    }
+    .event-card h3 {
+      margin-bottom: 0.5rem;
+      color: #a5d6ff;
+    }
+    .event-card p {
+      font-size: 0.95rem;
+      color: #8b949e;
+    }
+    /* Registration Form */
+    form {
+      max-width: 600px;
+      background: #161b22;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #58a6ff33;
+    }
+    form label {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #8b949e;
+      font-weight: 600;
+    }
+    form input, form select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 1.25rem;
+      border-radius: 4px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-size: 1rem;
+    }
+    form button {
+      background: #58a6ff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      color: #0d1117;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #a5d6ff;
+    }
+    footer {
+      background: #0d1117;
+      text-align: center;
+      color: #58a6ff;
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      border-top: 1px solid #30363d;
+      margin-top: auto;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .events-tabs {
+        flex-direction: column;
+      }
+      nav a {
+        margin-left: 0;
+        margin-top: 0.75rem;
+        display: inline-block;
+      }
+      header {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tech Titans</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#registration">Registration</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" id="about">
+      <h2>Welcome to Tech Titans</h2>
+      <p>Your gateway to the most thrilling technical and non-technical events in the college symposium. Join us to innovate, compete, and celebrate!</p>
+      <p><strong>Date:</strong> 25th September 2025</p>
+      <p><strong>Venue:</strong> College Auditorium</p>
+    </section>
+
+    <section id="events">
+      <h2>Events</h2>
+      <div class="events-tabs">
+        <div class="tab active" data-target="technical">Technical Events</div>
+        <div class="tab" data-target="nontechnical">Non-Technical Events</div>
+      </div>
+      <div class="events-list active" id="technical">
+        <div class="event-card">
+          <h3>Code Clash</h3>
+          <p>Programming competition to solve algorithmic challenges in limited time.</p>
+        </div>
+        <div class="event-card">
+          <h3>Robotics Race</h3>
+          <p>Design and race your robot through an obstacle course.</p>
+        </div>
+      </div>
+      <div class="events-list" id="nontechnical">
+        <div class="event-card">
+          <h3>Quiz Battle</h3>
+          <p>Test your general knowledge and tech trivia with your peers.</p>
+        </div>
+        <div class="event-card">
+          <h3>Debate Championship</h3>
+          <p>Articulate your thoughts and engage in meaningful arguments.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="registration">
+      <h2>Registration</h2>
+      <form>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Your email" required />
+
+        <label for="event">Select Event</label>
+        <select id="event" name="event" required>
+          <option value="" disabled selected>Choose an event</option>
+          <optgroup label="Technical Events">
+            <option value="code_clash">Code Clash</option>
+            <option value="robotics_race">Robotics Race</option>
+          </optgroup>
+          <optgroup label="Non-Technical Events">
+            <option value="quiz_battle">Quiz Battle</option>
+            <option value="debate_championship">Debate Championship</option>
+          </optgroup>
+        </select>
+
+        <button type="submit">Register</button>
+      </form>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: tech.titans@symposium.edu</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>Follow us on social media for updates!</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Tech Titans Symposium | All rights reserved
+  </footer>
+
+  <script>
+    // Tab switching logic
+    const tabs = document.querySelectorAll('.events-tabs .tab');
+    const eventLists = document.querySelectorAll('.events-list');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Add active to current
+        tab.classList.add('active');
+        // Show corresponding event list
+        const target = tab.getAttribute('data-target');
+        eventLists.forEach(list => {
+          if (list.id === target) {
+            list.classList.add('active');
+          } else {
+            list.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Form submit with fetch to backend API
+    document.querySelector('form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.target;
+
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        event: form.event.value,
+      };
+
+      if (!data.name || !data.email || !data.event) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert(result.message);
+          form.reset();
+        } else {
+          alert(result.message || "Registration failed.");
+        }
+      } catch (error) {
+        alert('Failed to register. Please try again later.');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
