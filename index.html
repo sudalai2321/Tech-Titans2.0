@@ -7,11 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
   <style>
     /* Basic Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
       background: #0d1117;
@@ -23,7 +19,7 @@
       scroll-behavior: smooth;
     }
     header {
-      background: #ffffff;
+      background: #161b22;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -33,10 +29,7 @@
       z-index: 100;
       box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
-    header h1 {
-      color: #58a6ff;
-      font-weight: 600;
-    }
+    header h1 { color: #58a6ff; font-weight: 600; }
     nav a {
       color: #58a6ff;
       margin-left: 1.5rem;
@@ -44,34 +37,17 @@
       font-weight: 500;
       transition: color 0.3s ease;
     }
-    nav a:hover {
-      color: #a5d6ff;
-    }
-    main {
-      flex: 1;
-      padding: 3rem 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    section {
-      margin-bottom: 4rem;
-    }
+    nav a:hover { color: #a5d6ff; }
+    main { flex: 1; padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
+    section { margin-bottom: 4rem; }
     .intro h2 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
       color: #58a6ff;
     }
-    .intro p {
-      font-size: 1.1rem;
-      color: #8b949e;
-    }
+    .intro p { font-size: 1.1rem; color: #8b949e; }
     /* Events Section */
-    .events-tabs {
-      display: flex;
-      margin-bottom: 2rem;
-      cursor: pointer;
-      user-select: none;
-    }
+    .events-tabs { display: flex; margin-bottom: 2rem; cursor: pointer; }
     .events-tabs div {
       flex: 1;
       padding: 1rem;
@@ -80,9 +56,9 @@
       color: #58a6ff;
       font-weight: 600;
       transition: background 0.3s ease;
+      user-select: none;
     }
-    .events-tabs div.active,
-    .events-tabs div:hover {
+    .events-tabs div.active, .events-tabs div:hover {
       background: #58a6ff;
       color: #0d1117;
     }
@@ -92,9 +68,7 @@
       gap: 1.5rem;
       margin-top: 1rem;
     }
-    .events-list.active {
-      display: grid;
-    }
+    .events-list.active { display: grid; }
     .event-card {
       background: #161b22;
       border: 1px solid #30363d;
@@ -107,14 +81,8 @@
       transform: translateY(-5px);
       box-shadow: 0 0 15px #58a6ffaa;
     }
-    .event-card h3 {
-      margin-bottom: 0.5rem;
-      color: #a5d6ff;
-    }
-    .event-card p {
-      font-size: 0.95rem;
-      color: #8b949e;
-    }
+    .event-card h3 { margin-bottom: 0.5rem; color: #a5d6ff; }
+    .event-card p { font-size: 0.95rem; color: #8b949e; }
     /* Registration Form */
     form {
       max-width: 600px;
@@ -149,9 +117,7 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-    form button:hover {
-      background: #a5d6ff;
-    }
+    form button:hover { background: #a5d6ff; }
     footer {
       background: #0d1117;
       text-align: center;
@@ -163,20 +129,16 @@
     }
     /* Responsive */
     @media (max-width: 600px) {
-      .events-tabs {
-        flex-direction: column;
-      }
+      .events-tabs { flex-direction: column; }
       nav a {
         margin-left: 0;
         margin-top: 0.75rem;
         display: inline-block;
       }
-      header {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
+      header { flex-wrap: wrap; justify-content: center; }
     }
   </style>
+  
 </head>
 <body>
   <header>
@@ -227,7 +189,7 @@
 
     <section id="registration">
       <h2>Registration</h2>
-      <form>
+      <form id="registrationForm">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" placeholder="Your full name" required />
 
@@ -264,62 +226,37 @@
   </footer>
 
   <script>
-    // Tab switching logic
+    // Event Tabs Switching
     const tabs = document.querySelectorAll('.events-tabs .tab');
     const eventLists = document.querySelectorAll('.events-list');
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        // Remove active class from all tabs
         tabs.forEach(t => t.classList.remove('active'));
-        // Add active to current
         tab.classList.add('active');
-        // Show corresponding event list
         const target = tab.getAttribute('data-target');
         eventLists.forEach(list => {
-          if (list.id === target) {
-            list.classList.add('active');
-          } else {
-            list.classList.remove('active');
-          }
+          list.classList.toggle('active', list.id === target);
         });
       });
     });
 
-    // Form submit with fetch to backend API
-    document.querySelector('form').addEventListener('submit', async e => {
+    // Google Sheets Form Submission
+    document.getElementById('registrationForm').addEventListener('submit', function(e){
       e.preventDefault();
       const form = e.target;
-
-      const data = {
-        name: form.name.value.trim(),
-        email: form.email.value.trim(),
-        event: form.event.value,
-      };
-
-      if (!data.name || !data.email || !data.event) {
-        alert("Please fill all required fields.");
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:3000/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          alert(result.message);
-          form.reset();
-        } else {
-          alert(result.message || "Registration failed.");
-        }
-      } catch (error) {
-        alert('Failed to register. Please try again later.');
-        console.error(error);
-      }
+      fetch("https://script.google.com/macros/s/AKfycbzKFbth7_Jxpj-pAEb61tUKmdAEh5vPYcEaQNr_PKgroUSWct-y2K-asvEMe59zIhW8OQ/exec", { // <-- Put your Google Apps Script Web App URL here!
+        method: "POST",
+        body: new FormData(form)
+      })
+      .then(res => res.text())
+      .then(text => {
+        alert(text);
+        form.reset();
+      })
+      .catch(err => {
+        alert('Error submitting form. Please try again.');
+        console.error(err);
+      });
     });
   </script>
 </body>
