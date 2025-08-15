@@ -1,263 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tech Titans Symposium</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
-  <style>
-    /* Basic Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      scroll-behavior: smooth;
-    }
-    header {
-      background: #161b22;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
-    header h1 { color: #58a6ff; font-weight: 600; }
-    nav a {
-      color: #58a6ff;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    nav a:hover { color: #a5d6ff; }
-    main { flex: 1; padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
-    section { margin-bottom: 4rem; }
-    .intro h2 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: #58a6ff;
-    }
-    .intro p { font-size: 1.1rem; color: #8b949e; }
-    /* Events Section */
-    .events-tabs { display: flex; margin-bottom: 2rem; cursor: pointer; }
-    .events-tabs div {
-      flex: 1;
-      padding: 1rem;
-      text-align: center;
-      border: 2px solid #58a6ff;
-      color: #58a6ff;
-      font-weight: 600;
-      transition: background 0.3s ease;
-      user-select: none;
-    }
-    .events-tabs div.active, .events-tabs div:hover {
-      background: #58a6ff;
-      color: #0d1117;
-    }
-    .events-list {
-      display: none;
-      grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .events-list.active { display: grid; }
-    .event-card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #58a6ff33;
-      transition: transform 0.3s ease;
-    }
-    .event-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px #58a6ffaa;
-    }
-    .event-card h3 { margin-bottom: 0.5rem; color: #a5d6ff; }
-    .event-card p { font-size: 0.95rem; color: #8b949e; }
-    /* Registration Form */
-    form {
-      max-width: 600px;
-      background: #161b22;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #58a6ff33;
-    }
-    form label {
-      display: block;
-      margin-bottom: 0.25rem;
-      color: #8b949e;
-      font-weight: 600;
-    }
-    form input, form select {
-      width: 100%;
-      padding: 0.5rem 0.75rem;
-      margin-bottom: 1.25rem;
-      border-radius: 4px;
-      border: 1px solid #30363d;
-      background: #0d1117;
-      color: #c9d1d9;
-      font-size: 1rem;
-    }
-    form button {
-      background: #58a6ff;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      color: #0d1117;
-      font-weight: 600;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    form button:hover { background: #a5d6ff; }
-    footer {
-      background: #0d1117;
-      text-align: center;
-      color: #58a6ff;
-      padding: 1rem 2rem;
-      font-size: 0.9rem;
-      border-top: 1px solid #30363d;
-      margin-top: auto;
-    }
-    /* Responsive */
-    @media (max-width: 600px) {
-      .events-tabs { flex-direction: column; }
-      nav a {
-        margin-left: 0;
-        margin-top: 0.75rem;
-        display: inline-block;
-      }
-      header { flex-wrap: wrap; justify-content: center; }
-    }
-  </style>
-  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Techura Symposium</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0d1117;
+  color: #c9d1d9;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* === ANIMATED BACKGROUND === */
+.animated-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: linear-gradient(270deg, #0d1117, #1f2937, #005f73, #0a9396, #0d1117);
+  background-size: 1000% 1000%;
+  animation: gradientWave 25s ease infinite;
+}
+
+@keyframes gradientWave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 4s infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* HEADER */
+header {
+  background: rgba(22, 27, 34, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+header h1 {
+  color: #58a6ff;
+  font-weight: 600;
+  animation: fadeInDown 1s ease-in-out;
+}
+nav a {
+  color: #58a6ff;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+nav a:hover { color: #a5d6ff; }
+
+/* HERO SECTION */
+.hero {
+  background: url('https://images.unsplash.com/photo-1581092795360-f68b71a2b2a3?fit=crop&w=1600&q=80') center/cover;
+  text-align: center;
+  padding: 6rem 2rem;
+  color: white;
+  position: relative;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+.hero h2 {
+  font-size: 3rem;
+  color: #58a6ff;
+  animation: fadeInUp 1s ease-in-out;
+}
+.hero p {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  color: #ccc;
+}
+.countdown {
+  font-size: 1.2rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin-top: 1.5rem;
+  display: inline-block;
+  color: #58a6ff;
+}
+
+/* INTRO */
+main { flex: 1; padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
+section { margin-bottom: 4rem; }
+.intro h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #58a6ff;
+}
+.intro p { font-size: 1.1rem; color: #8b949e; }
+
+/* EVENT TABS */
+.events-tabs {
+  display: flex;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.events-tabs div {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+  border-right: 2px solid #58a6ff;
+  color: #58a6ff;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+.events-tabs div:last-child { border-right: none }
+.events-tabs div.active, .events-tabs div:hover {
+  background: #58a6ff;
+  color: #0d1117;
+}
+
+/* EVENTS LIST */
+.events-list {
+  display: none;
+  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.events-list.active { display: grid; }
+.event-card {
+  background: rgba(22,27,34,0.8);
+  border: 1px solid #30363d;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #58a6ff33;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.event-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 20px #58a6ffaa;
+  cursor: pointer;
+}
+.event-card h3 { margin-bottom: 0.5rem; color: #a5d6ff; }
+.event-card p { font-size: 0.95rem; color: #8b949e; }
+
+/* FORM */
+form {
+  max-width: 600px;
+  background: rgba(22,27,34,0.95);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #58a6ff33;
+}
+form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #8b949e;
+  font-weight: 600;
+}
+form input, form select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1.25rem;
+  border-radius: 4px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  color: #c9d1d9;
+  font-size: 1rem;
+}
+form button {
+  background: #58a6ff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: #0d1117;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+form button:hover { background: #a5d6ff; }
+
+/* FOOTER */
+footer {
+  background: #0d1117;
+  text-align: center;
+  color: #58a6ff;
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  border-top: 1px solid #30363d;
+  margin-top: auto;
+}
+
+/* SUCCESS MESSAGE */
+.success-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.success-message {
+  background: #161b22;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #58a6ff;
+  box-shadow: 0 0 20px #58a6ffaa;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInDown {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* MOBILE IMPROVEMENTS */
+@media (max-width: 768px) {
+  body { font-size: 14px; line-height: 1.5; }
+  header { flex-direction: column; padding: 0.5rem 1rem; text-align: center; }
+  header h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  nav { display: flex; flex-wrap: wrap; justify-content: center; }
+  nav a { margin: 0.4rem 0.6rem; font-size: 0.9rem; padding: 0.3rem 0.6rem; border-radius: 4px; background: rgba(88, 166, 255, 0.1); }
+  .hero { padding: 3rem 1rem; background-position: center; }
+  .hero h2 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .countdown { font-size: 1rem; padding: 0.4rem 0.8rem; }
+  section { padding: 1rem; margin-bottom: 2rem; }
+  .intro h2 { font-size: 1.8rem; }
+  .intro p { font-size: 0.95rem; }
+  .events-tabs { flex-direction: column; border-radius: 6px; }
+  .events-tabs div { padding: 0.8rem; font-size: 0.9rem; }
+  .events-list { gap: 1rem; }
+  .event-card { padding: 1rem; font-size: 0.9rem; }
+  .event-card h3 { font-size: 1.1rem; }
+  form { padding: 1rem; font-size: 0.9rem; }
+  form label { font-size: 0.9rem; }
+  form input, form select { font-size: 0.9rem; padding: 0.4rem 0.6rem; }
+  form button { width: 100%; padding: 0.6rem; font-size: 1rem; }
+  footer { font-size: 0.8rem; padding: 0.6rem; }
+}
+@media (max-width: 480px) {
+  .hero h2 { font-size: 1.6rem; }
+  nav a { padding: 0.4rem 0.5rem; margin: 0.2rem; }
+  .event-card { font-size: 0.85rem; }
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Tech Titans</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#events">Events</a>
-      <a href="#registration">Registration</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="intro" id="about">
-      <h2>Welcome to Tech Titans</h2>
-      <p>Your gateway to the most thrilling technical and non-technical events in the college symposium. Join us to innovate, compete, and celebrate!</p>
-      <p><strong>Date:</strong> 25th September 2025</p>
-      <p><strong>Venue:</strong> College Auditorium</p>
-    </section>
+<!-- Animated Background -->
+<div class="animated-bg" id="stars"></div>
 
-    <section id="events">
-      <h2>Events</h2>
-      <div class="events-tabs">
-        <div class="tab active" data-target="technical">Technical Events</div>
-        <div class="tab" data-target="nontechnical">Non-Technical Events</div>
+<header>
+  <h1>Techura 2K25</h1>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#events">Events</a>
+    <a href="#registration">Registration</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h2>Techura Symposium 2K25</h2>
+    <p>Innovate | Compete | Celebrate</p>
+    <p>Register Now...</p>
+    <div class="countdown" id="countdown"></div>
+  </div>
+</section>
+
+<main>
+  <section class="intro" id="about">
+    <h2>About the Event</h2>
+    <p>Get ready for the biggest college symposium with challenging technical events and exciting non-technical activities.</p>
+    <p><strong>Date:</strong> 25th September 2025</p>
+    <p><strong>Venue:</strong> College Auditorium</p>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events">
+    <h2>Events</h2>
+    <div class="events-tabs">
+      <div class="tab active" data-target="technical">Technical Events</div>
+      <div class="tab" data-target="nontechnical">Non-Technical Events</div>
+    </div>
+    <div class="events-list active" id="technical">
+      <div class="event-card" data-details="Solve algorithmic challenges under time pressure.">
+        <h3>Code Clash</h3>
+        <p>A programming competition for the brightest minds.</p>
       </div>
-      <div class="events-list active" id="technical">
-        <div class="event-card">
-          <h3>Code Clash</h3>
-          <p>Programming competition to solve algorithmic challenges in limited time.</p>
-        </div>
-        <div class="event-card">
-          <h3>Robotics Race</h3>
-          <p>Design and race your robot through an obstacle course.</p>
-        </div>
+      <div class="event-card" data-details="Race your self-built robot through exciting obstacles.">
+        <h3>Robotics Race</h3>
+        <p>Show off your engineering skills and speed.</p>
       </div>
-      <div class="events-list" id="nontechnical">
-        <div class="event-card">
-          <h3>Quiz Battle</h3>
-          <p>Test your general knowledge and tech trivia with your peers.</p>
-        </div>
-        <div class="event-card">
-          <h3>Debate Championship</h3>
-          <p>Articulate your thoughts and engage in meaningful arguments.</p>
-        </div>
+    </div>
+    <div class="events-list" id="nontechnical">
+      <div class="event-card" data-details="Compete in a fun and challenging quiz.">
+        <h3>Quiz Battle</h3>
+        <p>Test your knowledge and quick thinking.</p>
       </div>
-    </section>
+      <div class="event-card" data-details="Debate important issues with confidence.">
+        <h3>Debate Championship</h3>
+        <p>Engage in stimulating discussions and arguments.</p>
+      </div>
+    </div>
+  </section>
 
-    <section id="registration">
-      <h2>Registration</h2>
-      <form id="registrationForm">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" placeholder="Your full name" required />
+  <!-- REGISTRATION -->
+  <section id="registration">
+    <h2>Registration</h2>
+    <form id="registrationForm">
+      <label>Team Name</label>
+      <input type="text" name="name" required>
+      <label>College Name</label>
+      <input type="text" name="college" required>
+      <label>Year</label>
+      <select name="year" required>
+        <option value="" disabled selected>Select year</option>
+        <option>1st Year</option>
+        <option>2nd Year</option>
+        <option>3rd Year</option>
+        <option>4th Year</option>
+      </select>
+      <label>Department</label>
+      <input type="text" name="department" required>
+      <label>Team Member 1</label>
+      <input type="text" name="member1" required>
+      <label>Team Member 2</label>
+      <input type="text" name="member2">
+      <label>Team Member 3</label>
+      <input type="text" name="member3">
+      <label>Team Head</label>
+      <input type="text" name="team_head" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Phone</label>
+      <input type="tel" name="phone" pattern="[0-9]{10}" required>
+      <label>Event</label>
+      <select name="event" required>
+        <option value="" disabled selected>Choose an event</option>
+        <optgroup label="Technical Events">
+          <option value="code_clash">Code Clash</option>
+          <option value="robotics_race">Robotics Race</option>
+        </optgroup>
+        <optgroup label="Non-Technical Events">
+          <option value="quiz_battle">Quiz Battle</option>
+          <option value="debate_championship">Debate Championship</option>
+        </optgroup>
+      </select>
+      <button type="submit">Register</button>
+    </form>
+  </section>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="Your email" required />
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Address:   NH-45, Trichy Chennai Trunk Road,
+       Samayapuram (Near Samayapuram Toll Plaza),
+       Tiruchirappalli - 621 112.
+       Tamil Nadu,
+       India.</p>
+    <p>Email: enquiry@dsuniversity.ac.in</p>
+    <p>Phone:  +91 63841 76766 | +91 63841 76769</p>
+  </section>
+</main>
 
-        <label for="event">Select Event</label>
-        <select id="event" name="event" required>
-          <option value="" disabled selected>Choose an event</option>
-          <optgroup label="Technical Events">
-            <option value="code_clash">Code Clash</option>
-            <option value="robotics_race">Robotics Race</option>
-          </optgroup>
-          <optgroup label="Non-Technical Events">
-            <option value="quiz_battle">Quiz Battle</option>
-            <option value="debate_championship">Debate Championship</option>
-          </optgroup>
-        </select>
+<footer>
+  &copy; 2K25 Techura Symposium | All rights reserved
+</footer>
 
-        <button type="submit">Register</button>
-      </form>
-    </section>
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-message">
+    <h3>✅ Registration Successful!</h3>
+    <p>See you at the symposium..</p>
+    <button onclick="document.getElementById('successOverlay').style.display='none'">Close</button>
+  </div>
+</div>
 
-    <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Email: tech.titans@symposium.edu</p>
-      <p>Phone: +91 98765 43210</p>
-      <p>Follow us on social media for updates!</p>
-    </section>
-  </main>
+<script>
+// === STAR BACKGROUND GENERATOR ===
+const starsContainer = document.getElementById('stars');
+for (let i=0; i<100; i++){
+  let star = document.createElement('div');
+  let size = Math.random()*3 + 'px';
+  star.className = 'star';
+  star.style.width = size;
+  star.style.height = size;
+  star.style.top = Math.random()*100 + '%';
+  star.style.left = Math.random()*100 + '%';
+  star.style.animationDuration = (Math.random()*3 + 2) + 's';
+  starsContainer.appendChild(star);
+}
 
-  <footer>
-    &copy; 2025 Tech Titans Symposium | All rights reserved
-  </footer>
-
-  <script>
-    // Event Tabs Switching
-    const tabs = document.querySelectorAll('.events-tabs .tab');
-    const eventLists = document.querySelectorAll('.events-list');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const target = tab.getAttribute('data-target');
-        eventLists.forEach(list => {
-          list.classList.toggle('active', list.id === target);
-        });
-      });
+// Tabs Switching
+document.querySelectorAll('.events-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    let target = tab.getAttribute('data-target');
+    document.querySelectorAll('.events-list').forEach(list => {
+      list.classList.toggle('active', list.id === target);
     });
+  });
+});
 
-    // Google Sheets Form Submission
-    document.getElementById('registrationForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const form = e.target;
-      fetch("https://script.google.com/macros/s/AKfycbzKFbth7_Jxpj-pAEb61tUKmdAEh5vPYcEaQNr_PKgroUSWct-y2K-asvEMe59zIhW8OQ/exec", { // <-- Put your Google Apps Script Web App URL here!
-        method: "POST",
-        body: new FormData(form)
-      })
-      .then(res => res.text())
-      .then(text => {
-        alert(text);
-        form.reset();
-      })
-      .catch(err => {
-        alert('Error submitting form. Please try again.');
-        console.error(err);
-      });
-    });
-  </script>
+// Countdown Timer
+let eventDate = new Date("Sep 25, 2025 09:00:00").getTime();
+let countdownEl = document.getElementById("countdown");
+let timer = setInterval(() => {
+  let now = new Date().getTime();
+  let diff = eventDate - now;
+  if (diff <= 0) {
+    clearInterval(timer);
+    countdownEl.innerHTML = "The Event is Live!";
+    return;
+  }
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  let secs = Math.floor((diff % (1000 * 60)) / 1000);
+  countdownEl.innerHTML = `${days}d ${hours}h ${mins}m ${secs}s`;
+}, 1000);
+
+// Event Details Popup
+document.querySelectorAll('.event-card').forEach(card => {
+  card.addEventListener('click', () => {
+    alert(card.querySelector('h3').innerText + "\n\n" + card.dataset.details);
+  });
+});
+
+// Form Submission
+document.getElementById('registrationForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  let form = e.target;
+  if (!form.checkValidity()) {
+    alert("Please fill all required fields correctly.");
+    return;
+  }
+  fetch("https://script.google.com/macros/s/AKfycbzjMbOhr8l9uqHZCWCj0akzZ8i3vbIBA1BUv4wS8lggHcrfswumfWv4Hx4LdSQ86-Xb6w/exec", {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(res => res.text())
+  .then(msg => {
+    document.getElementById('successOverlay').style.display = 'flex';
+    form.reset();
+  })
+  .catch(err => {
+    alert('Error submitting form');
+    console.error(err);
+  });
+});
+</script>
 </body>
 </html>
