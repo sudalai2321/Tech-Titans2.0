@@ -469,10 +469,15 @@ document.querySelectorAll('.event-card').forEach(card => {
 document.getElementById('registrationForm').addEventListener('submit', function(e){
   e.preventDefault();
   let form = e.target;
+  let submitBtn = form.querySelector('button[type="submit"]');
   if (!form.checkValidity()) {
     alert("Please fill all required fields correctly.");
     return;
   }
+  // Disable the button immediately
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
   fetch("https://script.google.com/macros/s/AKfycbzjMbOhr8l9uqHZCWCj0akzZ8i3vbIBA1BUv4wS8lggHcrfswumfWv4Hx4LdSQ86-Xb6w/exec", {
     method: "POST",
     body: new FormData(form)
@@ -481,12 +486,18 @@ document.getElementById('registrationForm').addEventListener('submit', function(
   .then(msg => {
     document.getElementById('successOverlay').style.display = 'flex';
     form.reset();
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Register"; // Reset button text
   })
   .catch(err => {
     alert('Error submitting form');
     console.error(err);
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Register"; // Reset button text
   });
 });
+
 </script>
 </body>
 </html>
+
