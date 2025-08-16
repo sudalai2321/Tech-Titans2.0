@@ -598,7 +598,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
 // Theme switcher logic
 const themeSelect = document.getElementById("themeSwitcher");
-const savedTheme = localStorage.getItem("theme") || "dark";
+const savedTheme = localStorage.getItem("theme") || "light";
 // Apply saved theme on load
 if (savedTheme === "light") {
   document.body.classList.add("light-theme");
@@ -619,3 +619,4 @@ themeSelect.addEventListener("change", () => {
 </script>
 </body>
 </html>
+
